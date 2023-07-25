@@ -11,7 +11,7 @@ import java.util.List;
 @RequestMapping("/student_information_service/v1")
 public class StudentController {
     Student student1 = new Student();
-    Student student2 = new Student(5768,"Mary","Jane","maryjane@yahoo.com","A+","David","Wendy",13,"Female","Mumbai",7,new String[] {"Physics","History"},"Basketball","Peanuts","Bus");
+    Student student2 = new Student(5768,"Mary","Jane","maryjane@yahoo.com","A+","David","Wendy",13,"Female","Mumbai",7,"Basketball","Peanuts","Bus");
     List<Student> res = new ArrayList<Student>();
     public StudentController() {
 
