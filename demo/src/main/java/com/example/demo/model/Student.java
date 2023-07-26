@@ -3,6 +3,7 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.antlr.v4.runtime.misc.NotNull;
 
 
 @Getter
@@ -15,98 +16,42 @@ import lombok.*;
 
 
 public class Student {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private long id = 1234;
+    private long id;
 
     @Column(name = "first_name")
-    private String firstName = "John";
-    @Column(name = "last_name")
-    private String lastName = "Doe";
+    @NotNull
+    private String firstName;
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
     @Column(name = "email")
-    private String emailId = "johndoe@gmail.com";
+    private String emailId;
     @Column(name = "blood_group")
-    private String bloodGroup = "O+";
+    private String bloodGroup;
     @Column(name = "father_name")
-    private String fatherName = "Bob";
+    private String fatherName;
     @Column(name = "mother_name")
-    private String motherName = "Alice";
+    private String motherName;
     @Column(name = "age")
-    private int age = 12;
+    private int age;
     @Column(name = "gender")
-    private String gender = "Male";
+    private String gender;
     @Column(name = "address")
-    private String address = "Bangalore";
+    private String address;
     @Column(name = "class")
-    private int _class = 6;
+    private int _class;
 //    @Column(name = "subject")
 //    private String [] Subjects = new String [] {"Math","English"};
     @Column(name = "extracurricular")
-    private String extraCurricular = "Art";
+    private String extraCurricular;
     @Column(name = "allergies")
-    private String allergies = "None";
+    private String allergies;
     @Column(name = "transport")
-    private String transport = "Self";
+    private String transport;
 
-    public long getId() {
-        return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getEmailId() {
-        return emailId;
-    }
-
-    public String getBloodGroup() {
-        return bloodGroup;
-    }
-
-    public String getFatherName() {
-        return fatherName;
-    }
-
-    public String getMotherName() {
-        return motherName;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public int get_class() {
-        return _class;
-    }
-
-//    public String[] getSubjects() {
-//        return Subjects;
-//    }
-
-    public String getExtraCurricular() {
-        return extraCurricular;
-    }
-
-    public String getAllergies() {
-        return allergies;
-    }
-
-    public String getTransport() {
-        return transport;
-    }
 
 }
