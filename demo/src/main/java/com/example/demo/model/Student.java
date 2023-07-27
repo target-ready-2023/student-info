@@ -21,28 +21,28 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private long id;
+    private long id; //UUID
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false, length = 100)
     @NotNull
     private String firstName;
-    @Column(name = "last_name", nullable = false)
+    @Column(name = "last_name", nullable = false, length = 100)
     private String lastName;
-    @Column(name = "email")
+    @Column(name = "email", nullable = false, length = 100)
     private String emailId;
-    @Column(name = "blood_group")
+    @Column(name = "blood_group", nullable = false, length = 3)
     private String bloodGroup;
-    @Column(name = "father_name")
+    @Column(name = "father_name", nullable = false, length = 100)
     private String fatherName;
-    @Column(name = "mother_name")
+    @Column(name = "mother_name", nullable = false, length = 100)
     private String motherName;
-    @Column(name = "age")
+    @Column(name = "age", nullable = false)
     private int age;
-    @Column(name = "gender")
+    @Column(name = "gender", nullable = false, length = 50)
     private String gender;
     @Column(name = "address")
     private String address;
-    @Column(name = "class")
+    @Column(name = "class", nullable = false, length = 10)
     private int _class;
 //    @Column(name = "subject")
 //    private String [] Subjects = new String [] {"Math","English"};
@@ -50,7 +50,7 @@ public class Student {
     private String extraCurricular;
     @Column(name = "allergies")
     private String allergies;
-    @Column(name = "transport")
+    @Column(name = "transport", length = 100)
     private String transport;
 
 
