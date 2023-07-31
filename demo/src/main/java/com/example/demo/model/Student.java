@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.antlr.v4.runtime.misc.NotNull;
 
+import java.util.UUID;
+
 
 @Getter
 @Setter
@@ -18,10 +20,11 @@ import org.antlr.v4.runtime.misc.NotNull;
 public class Student {
 
 
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "ID")
-    private long id; //UUID
+    private UUID id; //UUID
 
     @Column(name = "first_name", nullable = false, length = 100)
     @NotNull
@@ -44,14 +47,15 @@ public class Student {
     private String address;
     @Column(name = "class", nullable = false, length = 10)
     private int _class;
-//    @Column(name = "subject")
-//    private String [] Subjects = new String [] {"Math","English"};
+
     @Column(name = "extracurricular")
     private String extraCurricular;
     @Column(name = "allergies")
     private String allergies;
     @Column(name = "transport", length = 100)
     private String transport;
+    //    @Column(name = "subject")
+//    private String [] Subjects = new String [] {"Math","English"};
 
 
 }
