@@ -1,8 +1,8 @@
-package com.example.demo.dto.mapper;
+package com.student.info.dto.mapper;
 
-import com.example.demo.dto.request.StudentRequest;
-import com.example.demo.dto.response.StudentResponse;
-import com.example.demo.model.Student;
+import com.student.info.dto.request.StudentRequest;
+import com.student.info.dto.response.StudentResponse;
+import com.student.info.model.Student;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

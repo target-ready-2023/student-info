@@ -1,10 +1,10 @@
-package com.example.demo.service;
+package com.student.info.service;
 
-import com.example.demo.dto.mapper.StudentMapper;
-import com.example.demo.dto.request.StudentRequest;
-import com.example.demo.dto.response.StudentResponse;
-import com.example.demo.model.Student;
-import com.example.demo.respository.StudentRepository;
+import com.student.info.dto.mapper.StudentMapper;
+import com.student.info.dto.request.StudentRequest;
+import com.student.info.dto.response.StudentResponse;
+import com.student.info.model.Student;
+import com.student.info.respository.StudentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

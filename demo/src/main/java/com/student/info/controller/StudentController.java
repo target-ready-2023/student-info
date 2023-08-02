@@ -1,13 +1,11 @@
-package com.example.demo.controller;
+package com.student.info.controller;
 
-import com.example.demo.dto.request.StudentRequest;
-import com.example.demo.dto.response.StudentResponse;
-import com.example.demo.model.Student;
-import com.example.demo.respository.StudentRepository;
-import com.example.demo.service.StudentService;
+import com.student.info.dto.request.StudentRequest;
+import com.student.info.dto.response.StudentResponse;
+import com.student.info.model.Student;
+import com.student.info.service.StudentService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -21,7 +19,7 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping("/student")
+    @GetMapping("/students")
     public List<Student> getAllStudentInfo(){
 
         return studentService.getAllStudentInfo();
@@ -58,40 +56,4 @@ public class StudentController {
         return studentService.updateStudent(studentRequest,id);
     }
 
-    //    Student student1 = new Student();
-//    Student student2 = new Student(5768,"Mary","Jane","maryjane@yahoo.com","A+","David","Wendy",13,"Female","Mumbai",7,"Basketball","Peanuts","Bus");
-//    List<Student> res = new ArrayList<Student>();
-//    public StudentController() {
-//
-//        res.add(student1);
-//        res.add(student2);
-//    }
-//
-//    @GetMapping("/student")
-//    public List<Student> getAllStudentInfo(){
-//
-//        return res;
-//    }
-//
-////    @GetMapping("/student/1")
-////    public Student getStudentInfo(){
-////        return student1;
-////    }
-//
-//    @GetMapping("/student/{id}")
-//    public Student getStudentById(@PathVariable(value = "id") long id)
-//    {
-////        Student student3 = res.get(0);
-////        int _final=(int)id-1;
-////        Student student4 = res.get(_final);
-//        for(int i=0;i<res.toArray().length;i++)
-//        {
-//            long var = res.get(i).getId();
-//            if(var==id)
-//            {
-//                return res.get(i);
-//            }
-//        }
-//        return null;
-//    }
-}
+   }

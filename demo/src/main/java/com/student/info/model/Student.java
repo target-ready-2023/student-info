@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.student.info.model;
 
 
 import jakarta.persistence.*;
@@ -46,7 +46,7 @@ public class Student {
     @Column(name = "address")
     private String address;
     @Column(name = "class", nullable = false, length = 10)
-    private int _class;
+    private int standard;
 
     @Column(name = "extracurricular")
     private String extraCurricular;
@@ -54,8 +54,5 @@ public class Student {
     private String allergies;
     @Column(name = "transport", length = 100)
     private String transport;
-    //    @Column(name = "subject")
-//    private String [] Subjects = new String [] {"Math","English"};
-
 
 }
