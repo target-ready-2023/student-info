@@ -22,10 +22,9 @@ public class Student {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private UUID id; //UUID
-
+    private long id;
     @Column(name = "first_name", nullable = false, length = 100)
     @NotNull
     private String firstName;
@@ -33,7 +32,7 @@ public class Student {
     private String lastName;
     @Column(name = "email", nullable = false, length = 100)
     private String emailId;
-    @Column(name = "blood_group", nullable = false, length = 3)
+    @Column(name = "blood_group", nullable= false, length = 3)
     private String bloodGroup;
     @Column(name = "father_name", nullable = false, length = 100)
     private String fatherName;
@@ -45,17 +44,15 @@ public class Student {
     private String gender;
     @Column(name = "address")
     private String address;
-    @Column(name = "class", nullable = false, length = 10)
-    private int _class;
-
+    @Column(name = "standard", nullable = false, length = 10)
+    private int standard;
     @Column(name = "extracurricular")
     private String extraCurricular;
     @Column(name = "allergies")
     private String allergies;
     @Column(name = "transport", length = 100)
     private String transport;
-    //    @Column(name = "subject")
-//    private String [] Subjects = new String [] {"Math","English"};
+
 
 
 }

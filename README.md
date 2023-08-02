@@ -1,3 +1,1 @@
-# student-i
-
-# Hi, I am Maria
+This Project contains the CRUD Operations for student-info page. 

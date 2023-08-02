@@ -10,9 +10,8 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
-public interface StudentRepository extends JpaRepository<Student, UUID>{
-//    List<Student> findByID(long id);
-//    List<Student> findAll();
+public interface StudentRepository extends JpaRepository<Student, Long>{
+
 }
 
 
