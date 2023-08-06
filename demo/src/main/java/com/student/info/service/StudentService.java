@@ -3,6 +3,7 @@ package com.student.info.service;
 import com.student.info.dto.mapper.StudentMapper;
 import com.student.info.dto.request.StudentRequest;
 import com.student.info.dto.response.StudentResponse;
+import com.student.info.exception.RequestValidationException;
 import com.student.info.model.Student;
 import com.student.info.respository.StudentRepository;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 
 @Service
 
@@ -43,10 +45,23 @@ public class StudentService {
 
     public StudentResponse addNewStudent(StudentRequest studentRequest) {
 
+        if (studentRequest == null) {
+            throw new RequestValidationException("Student request body cannot be null.");
+        }
+
+        // separate out the fields
+        if (studentRequest.getFirstName() == null || studentRequest.getLastName() == null || studentRequest.getEmailId() == null) {
+            throw new RequestValidationException("Student request body contains null parameters.");
+        }
+
         Student student = StudentMapper.MAPPER.fromReqToModel(studentRequest);
         studentRepository.save(student);
         return StudentMapper.MAPPER.fromModelToResponse(student);
-    };
+    }
+
+
+
+    ;
     public StudentResponse updateStudent(StudentRequest studentRequest,UUID id) {
 
         Optional<Student> checkExists = getStudentById(id);
