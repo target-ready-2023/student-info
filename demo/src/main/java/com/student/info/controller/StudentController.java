@@ -25,33 +25,33 @@ public class StudentController {
         return studentService.getAllStudentInfo();
     }
 
-    @GetMapping("/student/{id}")
+    @GetMapping("/students/{id}")
     public Optional<Student> getStudentById(@PathVariable("id") UUID id){
         return studentService.getStudentById(id);
     }
 
-    @PostMapping("/student")
+    @PostMapping("/students")
     public Student addNewStudent(@RequestBody Student student){
         return studentService.addNewStudent(student);
     }
 
-    @PutMapping("/student/{id}")
+    @PutMapping("/students/{id}")
     public Student updateStudent(@RequestBody Student student) {
         return studentService.updateStudent(student);
     }
 
 
-    @DeleteMapping("/student/{id}")
+    @DeleteMapping("/students/{id}")
     public void deleteStudent(@PathVariable("id") UUID id) {
         studentService.deleteStudent(id);
     }
 
-    @PostMapping("/student/resp")
+    @PostMapping("/students/resp")
     public StudentResponse addNewStudentResponse(@RequestBody StudentRequest studentRequest) {
         return studentService.addNewStudent(studentRequest);
     }
 
-    @PutMapping("/student/{id}/resp")
+    @PutMapping("/students/{id}/resp")
     public StudentResponse updateStudentResponse(@RequestBody StudentRequest studentRequest, @PathVariable("id") UUID id) {
         return studentService.updateStudent(studentRequest,id);
     }

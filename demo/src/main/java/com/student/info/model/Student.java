@@ -4,6 +4,8 @@ package com.student.info.model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.antlr.v4.runtime.misc.NotNull;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.util.UUID;
 
@@ -15,7 +17,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = "student")
-
+@SQLDelete(sql="UPDATE student SET is_deleted = true where id = ?")
+@Where(clause = "is_deleted=false")
 
 public class Student {
 
@@ -47,12 +50,13 @@ public class Student {
     private String address;
     @Column(name = "class", nullable = false, length = 10)
     private int standard;
-
     @Column(name = "extracurricular")
     private String extraCurricular;
     @Column(name = "allergies")
     private String allergies;
     @Column(name = "transport", length = 100)
     private String transport;
+    @Column(name = "is_deleted")
+    private boolean isDeleted = Boolean.FALSE;
 
 }
