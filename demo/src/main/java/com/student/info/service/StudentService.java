@@ -27,7 +27,7 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public Optional<Student> getStudentById(UUID id){
+    public Optional<Student> getStudentById(long id){
         return studentRepository.findById(id);
     }
 
@@ -39,13 +39,14 @@ public class StudentService {
         return studentRepository.save(student);
     };
 
-    public void deleteStudent(UUID id) {
+    public void deleteStudent(long id) {
         studentRepository.deleteById(id);
     };
 
     public StudentResponse addNewStudent(StudentRequest studentRequest) {
 
         if (studentRequest == null) {
+
             throw new RequestValidationException("Student request body cannot be null.");
         }
 
@@ -62,7 +63,7 @@ public class StudentService {
 
 
     ;
-    public StudentResponse updateStudent(StudentRequest studentRequest,UUID id) {
+    public StudentResponse updateStudent(StudentRequest studentRequest,long id) {
 
         Optional<Student> checkExists = getStudentById(id);
         if (! checkExists.isPresent())
