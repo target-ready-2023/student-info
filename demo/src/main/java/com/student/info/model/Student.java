@@ -17,8 +17,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = "student")
-@SQLDelete(sql="UPDATE student SET is_deleted = true where id = ?")
-@Where(clause = "is_deleted=false")
 
 public class Student {
 

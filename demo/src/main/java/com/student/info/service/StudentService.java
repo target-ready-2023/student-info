@@ -29,6 +29,13 @@ public class StudentService {
         return studentRepository.findById(id);
     }
 
+    public List<Student> findDeleted() {
+        return studentRepository.findDeleted();
+    }
+
+    public void softDelete(UUID id) {
+        studentRepository.softDelete(id);
+    }
     public Student addNewStudent(Student student){
         return studentRepository.save(student);
     }
