@@ -27,7 +27,7 @@ public class StudentController {
     }
 
     @GetMapping("/students/{id}")
-    public Optional<Student> getStudentById(@PathVariable("id") UUID id){
+    public Optional<Student> getStudentById(@PathVariable("id") long id){
         return studentService.getStudentById(id);
     }
 
@@ -47,10 +47,17 @@ public class StudentController {
     }
 
 
+<<<<<<< HEAD
 //    @DeleteMapping("/students/{id}")
 //    public void deleteStudent(@PathVariable("id") UUID id) {
 //        studentService.deleteStudent(id);
 //    }
+=======
+    @DeleteMapping("/students/{id}")
+    public void deleteStudent(@PathVariable("id") long id) {
+        studentService.deleteStudent(id);
+    }
+>>>>>>> fe5bce4e73422bb2ac7a46fc540051c18404a09f
 
     @DeleteMapping("/students/{id}")
     public void softDelete(@PathVariable("id") UUID id) {
@@ -62,7 +69,7 @@ public class StudentController {
     }
 
     @PutMapping("/students/{id}/resp")
-    public StudentResponse updateStudentResponse(@RequestBody StudentRequest studentRequest, @PathVariable("id") UUID id) {
+    public StudentResponse updateStudentResponse(@RequestBody StudentRequest studentRequest, @PathVariable("id") long id) {
         return studentService.updateStudent(studentRequest,id);
     }
 

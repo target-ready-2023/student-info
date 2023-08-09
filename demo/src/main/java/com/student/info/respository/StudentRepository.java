@@ -18,6 +18,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 //@SQLDelete(sql="UPDATE Student SET is_deleted = true where id = ?")
 //@Where(clause = "is_deleted=false")
 @Repository
+<<<<<<< HEAD
 public interface StudentRepository extends JpaRepository<Student, UUID>{
     //add override code for soft delete
     //studentrepoimpl
@@ -33,6 +34,9 @@ public interface StudentRepository extends JpaRepository<Student, UUID>{
     @Transactional
     public void softDelete(UUID id);
     //archived
+=======
+public interface StudentRepository extends JpaRepository<Student, Long>{
+>>>>>>> fe5bce4e73422bb2ac7a46fc540051c18404a09f
 }
 
 

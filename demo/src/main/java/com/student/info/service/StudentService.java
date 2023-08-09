@@ -25,7 +25,7 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public Optional<Student> getStudentById(UUID id){
+    public Optional<Student> getStudentById(long id){
         return studentRepository.findById(id);
     }
 
@@ -44,7 +44,7 @@ public class StudentService {
         return studentRepository.save(student);
     };
 
-    public void deleteStudent(UUID id) {
+    public void deleteStudent(long id) {
         studentRepository.deleteById(id);
     };
 
@@ -54,7 +54,7 @@ public class StudentService {
         studentRepository.save(student);
         return StudentMapper.MAPPER.fromModelToResponse(student);
     };
-    public StudentResponse updateStudent(StudentRequest studentRequest,UUID id) {
+    public StudentResponse updateStudent(StudentRequest studentRequest,long id) {
 
         Optional<Student> checkExists = getStudentById(id);
         if (! checkExists.isPresent())
