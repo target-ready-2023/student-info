@@ -3,12 +3,9 @@ package com.target.studentinfo.service;
 import com.target.studentinfo.dto.mapper.StudentMapper;
 import com.target.studentinfo.dto.request.StudentRequest;
 import com.target.studentinfo.dto.response.StudentResponse;
-import com.target.studentinfo.exception.BadRequestException;
-import com.target.studentinfo.exception.ErrorCode;
 import com.target.studentinfo.model.Student;
-import com.target.studentinfo.model.validator.StudentValidator;
+import com.target.studentinfo.dto.validator.StudentValidator;
 import com.target.studentinfo.respository.StudentRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

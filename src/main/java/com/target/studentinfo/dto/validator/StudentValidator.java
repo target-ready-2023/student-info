@@ -1,4 +1,4 @@
-package com.target.studentinfo.model.validator;
+package com.target.studentinfo.dto.validator;
 
 import com.target.studentinfo.dto.request.StudentRequest;
 import com.target.studentinfo.exception.BadRequestException;
