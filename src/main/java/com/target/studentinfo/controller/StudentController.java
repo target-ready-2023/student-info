@@ -30,6 +30,12 @@ public class StudentController {
         return studentService.getStudentById(id);
     }
 
+    @GetMapping("/students/archives")
+    public List<Student> findArchived() {
+        return studentService.findArchived();
+    }
+
+
     @PostMapping("/student")
     public Student addNewStudent(@RequestBody Student student){
         return studentService.addNewStudent(student);
@@ -41,9 +47,14 @@ public class StudentController {
     }
 
 
-    @DeleteMapping("/student/{id}")
-    public void deleteStudent(@PathVariable("id") UUID id) {
-        studentService.deleteStudent(id);
+//    @DeleteMapping("/student/{id}")
+//    public void deleteStudent(@PathVariable("id") UUID id) {
+//        studentService.deleteStudent(id);
+//    }
+
+    @DeleteMapping("/students/{id}")
+    public void softDelete(@PathVariable("id") UUID id) {
+        studentService.archive(id);
     }
 
     @PostMapping("/student/resp")

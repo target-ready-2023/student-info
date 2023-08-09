@@ -29,6 +29,13 @@ public class StudentService {
         return studentRepository.findById(id);
     }
 
+    public List<Student> findArchived() {
+        return studentRepository.findArchived();
+    }
+
+    public void archive(UUID id) {
+        studentRepository.archive(id);
+    }
     public Student addNewStudent(Student student){
         return studentRepository.save(student);
     }
