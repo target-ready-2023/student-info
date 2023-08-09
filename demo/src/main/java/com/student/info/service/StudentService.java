@@ -3,9 +3,11 @@ package com.student.info.service;
 import com.student.info.dto.mapper.StudentMapper;
 import com.student.info.dto.request.StudentRequest;
 import com.student.info.dto.response.StudentResponse;
-import com.student.info.exception.RequestValidationException;
+import com.student.info.exception.ErrorCode;
+import com.student.info.exception.BadRequestException;
 import com.student.info.model.Student;
 import com.student.info.respository.StudentRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,12 +48,19 @@ public class StudentService {
     public StudentResponse addNewStudent(StudentRequest studentRequest) {
 
         if (studentRequest == null) {
-            throw new RequestValidationException("Student request body cannot be null.");
+            throw new BadRequestException(ErrorCode.INVALID_REQUEST_BODY, ErrorCode.BAD_REQUEST, HttpStatus.BAD_REQUEST);
         }
 
-        // separate out the fields
-        if (studentRequest.getFirstName() == null || studentRequest.getLastName() == null || studentRequest.getEmailId() == null) {
-            throw new RequestValidationException("Student request body contains null parameters.");
+        if (studentRequest.getFirstName() == null) {
+            throw new BadRequestException(ErrorCode.INVALID_FIRST_NAME, ErrorCode.BAD_REQUEST, HttpStatus.BAD_REQUEST);
+        }
+
+        if (studentRequest.getLastName() == null) {
+            throw new BadRequestException(ErrorCode.INVALID_LAST_NAME, ErrorCode.BAD_REQUEST, HttpStatus.BAD_REQUEST);
+        }
+
+        if (studentRequest.getEmailId() == null) {
+            throw new BadRequestException(ErrorCode.INVALID_EMAIL_ID, ErrorCode.BAD_REQUEST, HttpStatus.BAD_REQUEST);
         }
 
         Student student = StudentMapper.MAPPER.fromReqToModel(studentRequest);
