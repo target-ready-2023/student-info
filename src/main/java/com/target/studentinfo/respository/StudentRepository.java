@@ -13,12 +13,12 @@ import java.util.UUID;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, UUID>{
-    @Override
+//    @Override
     @Query("SELECT s FROM Student s where s.isDeleted=false")
-    public List<Student> findAll();
+    public List<Student> findActive();
 
-    @Query("SELECT s FROM Student s where s.isDeleted=true")
-    public List<Student> findArchived();
+//    @Query("SELECT s FROM Student s where s.isDeleted=true")
+//    public List<Student> findArchived();
 
     @Query("UPDATE Student s SET s.isDeleted=true where id=?1")
     @Modifying

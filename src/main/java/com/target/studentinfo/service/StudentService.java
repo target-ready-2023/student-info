@@ -29,8 +29,8 @@ public class StudentService {
         return studentRepository.findById(id);
     }
 
-    public List<Student> findArchived() {
-        return studentRepository.findArchived();
+    public List<Student> findActive() {
+        return studentRepository.findActive();
     }
 
     public void archive(UUID id) {

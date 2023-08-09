@@ -20,9 +20,16 @@ public class StudentController {
     }
 
     @GetMapping("/students")
-    public List<Student> getAllStudentInfo(){
+    public List<Student> getAllStudentInfo(@RequestParam(defaultValue="false") Boolean isAdmin){
 
-        return studentService.getAllStudentInfo();
+        if(isAdmin==true)
+        {
+            return studentService.getAllStudentInfo();
+        }
+        else
+        {
+            return studentService.findActive();
+        }
     }
 
     @GetMapping("/student/{id}")
@@ -30,10 +37,10 @@ public class StudentController {
         return studentService.getStudentById(id);
     }
 
-    @GetMapping("/students/archives")
-    public List<Student> findArchived() {
-        return studentService.findArchived();
-    }
+//    @GetMapping("/students/archives")
+//    public List<Student> findArchived() {
+//        return studentService.findArchived();
+//    }
 
 
     @PostMapping("/student")
