@@ -6,18 +6,14 @@ public class NotFoundException extends RuntimeException {
     private int errorCode;
     private HttpStatus httpStatus;
 
-    public NotFoundException(String message, int errorCode, HttpStatus httpStatus) {
+    public NotFoundException(String message, int errorCode) {
         super(message);
         this.errorCode = errorCode;
-        this.httpStatus = httpStatus;
     }
 
     public int getErrorCode() {
         return errorCode;
     }
 
-    public HttpStatus getHttpStatus() {
-        return httpStatus;
-    }
 
 }

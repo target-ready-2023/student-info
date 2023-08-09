@@ -6,6 +6,7 @@ import com.target.studentinfo.dto.response.StudentResponse;
 import com.target.studentinfo.exception.BadRequestException;
 import com.target.studentinfo.exception.ErrorCode;
 import com.target.studentinfo.model.Student;
+import com.target.studentinfo.model.validator.StudentValidator;
 import com.target.studentinfo.respository.StudentRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -46,21 +47,7 @@ public class StudentService {
 
     public StudentResponse addNewStudent(StudentRequest studentRequest) {
 
-        if (studentRequest == null) {
-            throw new BadRequestException(ErrorCode.INVALID_REQUEST_BODY, ErrorCode.BAD_REQUEST, HttpStatus.BAD_REQUEST);
-        }
-
-        if (studentRequest.getFirstName() == null) {
-            throw new BadRequestException(ErrorCode.INVALID_FIRST_NAME, ErrorCode.BAD_REQUEST, HttpStatus.BAD_REQUEST);
-        }
-
-        if (studentRequest.getLastName() == null) {
-            throw new BadRequestException(ErrorCode.INVALID_LAST_NAME, ErrorCode.BAD_REQUEST, HttpStatus.BAD_REQUEST);
-        }
-
-        if (studentRequest.getEmailId() == null) {
-            throw new BadRequestException(ErrorCode.INVALID_EMAIL_ID, ErrorCode.BAD_REQUEST, HttpStatus.BAD_REQUEST);
-        }
+        StudentValidator.validateStudentRequest(studentRequest);
 
         Student student = StudentMapper.MAPPER.fromReqToModel(studentRequest);
         studentRepository.save(student);
