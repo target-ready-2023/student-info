@@ -26,7 +26,7 @@ public class StudentController {
     }
 
     @GetMapping("/student/{id}")
-    public Optional<Student> getStudentById(@PathVariable("id") UUID id){
+    public Optional<Student> getStudentById(@PathVariable("id") long id){
         return studentService.getStudentById(id);
     }
 
@@ -42,7 +42,7 @@ public class StudentController {
 
 
     @DeleteMapping("/student/{id}")
-    public void deleteStudent(@PathVariable("id") UUID id) {
+    public void deleteStudent(@PathVariable("id") long id) {
         studentService.deleteStudent(id);
     }
 
@@ -52,7 +52,7 @@ public class StudentController {
     }
 
     @PutMapping("/student/{id}/resp")
-    public StudentResponse updateStudentResponse(@RequestBody StudentRequest studentRequest, @PathVariable("id") UUID id) {
+    public StudentResponse updateStudentResponse(@RequestBody StudentRequest studentRequest, @PathVariable("id") long id) {
         return studentService.updateStudent(studentRequest,id);
     }
 
