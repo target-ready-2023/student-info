@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import org.mapstruct.Mapper;
 import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +16,9 @@ import java.util.Optional;
 @AllArgsConstructor
 @Builder
 @Mapper(componentModel = "spring")
-
+@Component
 public class StudentMapper {
-    public static Student toStudent(StudentRequest studentRequest) {
+    public Student toStudent(StudentRequest studentRequest) {
         return Student.builder()
                 .firstName(studentRequest.getFirstName())
                 .lastName(studentRequest.getLastName())
@@ -35,7 +36,7 @@ public class StudentMapper {
                 .build();
     }
 
-    public static StudentResponse toStudentResponse(Student student) {
+    public StudentResponse toStudentResponse(Student student) {
         return StudentResponse.builder()
                 .id(student.getId())
                 .firstName(student.getFirstName())
@@ -54,7 +55,8 @@ public class StudentMapper {
                 .build();
     }
 
-    public static List<StudentResponse> StudentDetails(List<Student> students) {
+    public List<StudentResponse> StudentDetails(List<Student> students) {
+        System.out.println(students);
         ArrayList<StudentResponse> details = new ArrayList<StudentResponse>();
         for (Student student : students) {
             details.add(
@@ -79,9 +81,11 @@ public class StudentMapper {
         return details;
     }
 
-    public static StudentResponse StudentDetail(Optional<Student> students) {
+    public StudentResponse StudentDetail(Optional<Student> students) {
         {
+            System.out.println(students);
                 if(students.isPresent()) {
+                    System.out.println(students.get());
                     Student student = students.get();
                     return StudentResponse.builder()
                             .id(student.getId())
