@@ -12,6 +12,7 @@ import java.util.Optional;
 @RestController
 public class StudentController {
     private final StudentService studentService;
+    @Autowired
     private final StudentMapper studentMapper;
 
     public StudentController(StudentService studentService , StudentMapper studentMapper ) {
@@ -20,34 +21,34 @@ public class StudentController {
     }
 
     @GetMapping("/students")
-    public List<StudentResponse> getAllStudentInfo(){
-        List<Student> student = studentService.getAllStudentInfo();
-        return  StudentMapper.StudentDetails(student);
+    public List<StudentResponse> getAllStudentInfo(@RequestParam(defaultValue="true") Boolean isActive){
+        List<Student> student = studentService.getAllStudentInfo(isActive);
+        return studentMapper.StudentDetails(student);
     }
 
     @GetMapping("/students/{id}")
-    public StudentResponse getStudentById(@PathVariable("id") long id){
-        Optional<Student> student = studentService.getStudentById(id);
-        return StudentMapper.StudentDetail(student);
+    public StudentResponse getStudentById(@PathVariable("id") long id , @RequestParam(defaultValue="true") Boolean isActive){
+        Optional<Student> student = studentService.getStudentById(id, isActive);
+        return studentMapper.StudentDetail(student);
     }
 
     @PostMapping("/students")
     public StudentResponse addStudent(@RequestBody StudentRequest studentRequest){
-        Student student = StudentMapper.toStudent(studentRequest);
+        Student student = studentMapper.toStudent(studentRequest);
         studentService.addStudent(student);
-        return StudentMapper.toStudentResponse(student);
+        return studentMapper.toStudentResponse(student);
     }
 
     @PutMapping("/students/{id}")
     public StudentResponse updateStudent(@RequestBody StudentRequest studentRequest, @PathVariable("id") long id) {
-        Student student = StudentMapper.toStudent(studentRequest);
+        Student student = studentMapper.toStudent(studentRequest);
         student.setId(id);
         studentService.updateStudent(student);
-        return StudentMapper.toStudentResponse(student);
+        return studentMapper.toStudentResponse(student);
     }
 
     @DeleteMapping("/students/{id}")
-    public void deleteStudent(@PathVariable("id") long id) {
-        studentService.deleteStudent(id);
+    public void softDelete(@PathVariable("id") long id) {
+        studentService.softDelete(id);
     }
    }

@@ -6,9 +6,8 @@ import com.target.studentinfo.model.Student;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import org.mapstruct.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -16,8 +15,9 @@ import java.util.Optional;
 @AllArgsConstructor
 @Builder
 @Mapper(componentModel = "spring")
-public class StudentMapper implements Serializable {
-    public static Student toStudent(StudentRequest studentRequest) {
+
+public class StudentMapper {
+    public Student toStudent(StudentRequest studentRequest) {
         return Student.builder()
                 .firstName(studentRequest.getFirstName())
                 .lastName(studentRequest.getLastName())
@@ -35,7 +35,7 @@ public class StudentMapper implements Serializable {
                 .build();
     }
 
-    public static StudentResponse toStudentResponse(Student student) {
+    public StudentResponse toStudentResponse(Student student) {
         return StudentResponse.builder()
                 .id(student.getId())
                 .firstName(student.getFirstName())
@@ -54,7 +54,7 @@ public class StudentMapper implements Serializable {
                 .build();
     }
 
-    public static List<StudentResponse> StudentDetails(List<Student> students) {
+    public List<StudentResponse> StudentDetails(List<Student> students) {
         ArrayList<StudentResponse> details = new ArrayList<StudentResponse>();
         for (Student student : students) {
             details.add(
@@ -79,7 +79,7 @@ public class StudentMapper implements Serializable {
         return details;
     }
 
-    public static StudentResponse StudentDetail(Optional<Student> students) {
+    public StudentResponse StudentDetail(Optional<Student> students) {
         {
                 if(students.isPresent()) {
                     Student student = students.get();

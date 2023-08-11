@@ -2,9 +2,9 @@ package com.target.studentinfo.service;
 import com.target.studentinfo.model.Student;
 import com.target.studentinfo.respository.StudentRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+
 @Service
 
 public class StudentService {
@@ -14,12 +14,12 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    public List<Student> getAllStudentInfo(){
-        return studentRepository.findAll();
+    public List<Student> getAllStudentInfo(Boolean isActive){
+        return (isActive ? studentRepository.findActive() : studentRepository.findAll());
     }
 
-    public Optional<Student> getStudentById(long id){
-        return studentRepository.findById(id);
+    public Optional<Student> getStudentById(long id , Boolean isActive){
+       return( isActive ? studentRepository.findActiveID(id) : studentRepository.findById(id));
     }
 
     public Student addStudent(Student student){
@@ -30,10 +30,9 @@ public class StudentService {
         return studentRepository.save(student);
     };
 
-    public void deleteStudent(long id) {
-        studentRepository.deleteById(id);
-    };
-
+    public void softDelete(long id) {
+        studentRepository.softDelete(id);
+    }
 }
 
 
