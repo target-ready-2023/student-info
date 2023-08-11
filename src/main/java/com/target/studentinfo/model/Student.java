@@ -11,16 +11,13 @@ import java.util.UUID;
 @Getter
 @Setter
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "student")
 
-
 public class Student {
-
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "ID")

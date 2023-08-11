@@ -1,8 +1,4 @@
 package com.target.studentinfo.service;
-
-import com.target.studentinfo.dto.mapper.StudentMapper;
-import com.target.studentinfo.dto.request.StudentRequest;
-import com.target.studentinfo.dto.response.StudentResponse;
 import com.target.studentinfo.model.Student;
 import com.target.studentinfo.respository.StudentRepository;
 import org.springframework.stereotype.Service;
@@ -40,28 +36,6 @@ public class StudentService {
     public void deleteStudent(UUID id) {
         studentRepository.deleteById(id);
     };
-
-    public StudentResponse addNewStudent(StudentRequest studentRequest) {
-
-        Student student = StudentMapper.MAPPER.fromReqToModel(studentRequest);
-        studentRepository.save(student);
-        return StudentMapper.MAPPER.fromModelToResponse(student);
-    };
-    public StudentResponse updateStudent(StudentRequest studentRequest,UUID id) {
-
-        Optional<Student> checkExists = getStudentById(id);
-        if (! checkExists.isPresent())
-            throw new RuntimeException("Employee ID" + id + " not found");
-        Student student = StudentMapper.MAPPER.fromReqToModel(studentRequest);
-        student.setId(id);
-        studentRepository.save(student);
-        return StudentMapper.MAPPER.fromModelToResponse(student);
-    };
-
-
-
-
-
 
 }
 

@@ -1,15 +1,16 @@
 package com.target.studentinfo.dto.response;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
-public class StudentResponse implements Serializable {
+@Data
+@AllArgsConstructor
+public class StudentResponse  {
 
     private String firstName;
     private String lastName;
