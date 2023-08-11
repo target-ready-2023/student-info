@@ -11,7 +11,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/student_information_service/v1")
 public class StudentController {
     private final StudentService studentService;
 
@@ -20,9 +19,9 @@ public class StudentController {
     }
 
     @GetMapping("/students")
-    public List<Student> getAllStudentInfo(@RequestParam(defaultValue="false") Boolean isAdmin){
+    public List<Student> getAllStudentInfo(@RequestParam(defaultValue="true") Boolean isActive){
 
-        if(isAdmin==true)
+        if(isActive==false)
         {
             return studentService.getAllStudentInfo();
         }
@@ -32,44 +31,41 @@ public class StudentController {
         }
     }
 
-    @GetMapping("/student/{id}")
-    public Optional<Student> getStudentById(@PathVariable("id") UUID id){
-        return studentService.getStudentById(id);
+    @GetMapping("/students/{id}")
+    public Optional<Student> getStudentById(@PathVariable("id") UUID id, @RequestParam(defaultValue="true") Boolean isActive){
+        if(isActive==false)
+        {
+            return studentService.getStudentById(id);
+        }
+        else
+        {
+            return studentService.findActiveID(id);
+        }
     }
 
-//    @GetMapping("/students/archives")
-//    public List<Student> findArchived() {
-//        return studentService.findArchived();
-//    }
 
-
-    @PostMapping("/student")
+    @PostMapping("/students")
     public Student addNewStudent(@RequestBody Student student){
         return studentService.addNewStudent(student);
     }
 
-    @PutMapping("/student/{id}")
+    @PutMapping("/students/{id}")
     public Student updateStudent(@RequestBody Student student) {
         return studentService.updateStudent(student);
     }
 
 
-//    @DeleteMapping("/student/{id}")
-//    public void deleteStudent(@PathVariable("id") UUID id) {
-//        studentService.deleteStudent(id);
-//    }
-
     @DeleteMapping("/students/{id}")
     public void softDelete(@PathVariable("id") UUID id) {
-        studentService.archive(id);
+        studentService.softDelete(id);
     }
 
-    @PostMapping("/student/resp")
+    @PostMapping("/students/resp")
     public StudentResponse addNewStudentResponse(@RequestBody StudentRequest studentRequest) {
         return studentService.addNewStudent(studentRequest);
     }
 
-    @PutMapping("/student/{id}/resp")
+    @PutMapping("/students/{id}/resp")
     public StudentResponse updateStudentResponse(@RequestBody StudentRequest studentRequest, @PathVariable("id") UUID id) {
         return studentService.updateStudent(studentRequest,id);
     }

@@ -9,21 +9,28 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, UUID>{
-//    @Override
-    @Query("SELECT s FROM Student s where s.isDeleted=false")
+    String query1 = "SELECT s FROM Student s where s.isActive=true";
+    String query2 = "UPDATE Student s SET s.isActive=false where id=?1";
+
+    String query3 = "SELECT s FROM Student s where s.isActive=true and id=?1";
+
+
+    @Query(query1)
     public List<Student> findActive();
 
-//    @Query("SELECT s FROM Student s where s.isDeleted=true")
-//    public List<Student> findArchived();
-
-    @Query("UPDATE Student s SET s.isDeleted=true where id=?1")
+    @Query(query2)
     @Modifying
     @Transactional
-    public void archive(UUID id);
+    public void softDelete(UUID id);
+
+    @Query(query3)
+    public Optional<Student> findActiveID(UUID id);
+
 }
 
 

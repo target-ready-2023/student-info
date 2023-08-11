@@ -29,12 +29,16 @@ public class StudentService {
         return studentRepository.findById(id);
     }
 
+    public Optional<Student> findActiveID(UUID id) {
+        return studentRepository.findActiveID(id);
+    };
+
     public List<Student> findActive() {
         return studentRepository.findActive();
     }
 
-    public void archive(UUID id) {
-        studentRepository.archive(id);
+    public void softDelete(UUID id) {
+        studentRepository.softDelete(id);
     }
     public Student addNewStudent(Student student){
         return studentRepository.save(student);

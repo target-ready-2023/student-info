@@ -54,8 +54,8 @@ public class Student {
     private String allergies;
     @Column(name = "transport", length = 100)
     private String transport;
-    @Column(name = "is_deleted")
-    private boolean isDeleted = Boolean.FALSE;
+    @Column(name = "is_active")
+    private boolean isActive = Boolean.TRUE;
 
 
 }
