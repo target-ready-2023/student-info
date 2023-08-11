@@ -22,9 +22,9 @@ public class Student {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private UUID id; //UUID
+    private long id; //UUID
 
     @Column(name = "first_name", nullable = false, length = 100)
     @NotNull
