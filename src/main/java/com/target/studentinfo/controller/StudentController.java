@@ -4,6 +4,7 @@ import com.target.studentinfo.dto.request.StudentRequest;
 import com.target.studentinfo.dto.response.StudentResponse;
 import com.target.studentinfo.model.Student;
 import com.target.studentinfo.service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
@@ -11,11 +12,11 @@ import java.util.Optional;
 @RestController
 public class StudentController {
     private final StudentService studentService;
-    //private final StudentMapper studentMapper;
+    private final StudentMapper studentMapper;
 
-    public StudentController(StudentService studentService  ) {
+    public StudentController(StudentService studentService , StudentMapper studentMapper ) {
         this.studentService = studentService;
-        //this.studentMapper = studentMapper;
+        this.studentMapper = studentMapper;
     }
 
     @GetMapping("/students")

@@ -6,6 +6,7 @@ import com.target.studentinfo.model.Student;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import org.mapstruct.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Builder
-@Mapper
+@Mapper(componentModel = "spring")
 public class StudentMapper implements Serializable {
     public static Student toStudent(StudentRequest studentRequest) {
         return Student.builder()
