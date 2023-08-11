@@ -5,8 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
-
 @Service
 
 public class StudentService {
@@ -17,7 +15,6 @@ public class StudentService {
     }
 
     public List<Student> getAllStudentInfo(){
-
         return studentRepository.findAll();
     }
 
@@ -25,7 +22,7 @@ public class StudentService {
         return studentRepository.findById(id);
     }
 
-    public Student addNewStudent(Student student){
+    public Student addStudent(Student student){
         return studentRepository.save(student);
     }
 
