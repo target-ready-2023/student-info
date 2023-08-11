@@ -17,7 +17,7 @@ import java.util.Optional;
 @Mapper(componentModel = "spring")
 
 public class StudentMapper {
-    public Student toStudent(StudentRequest studentRequest) {
+    public static Student toStudent(StudentRequest studentRequest) {
         return Student.builder()
                 .firstName(studentRequest.getFirstName())
                 .lastName(studentRequest.getLastName())
@@ -35,7 +35,7 @@ public class StudentMapper {
                 .build();
     }
 
-    public StudentResponse toStudentResponse(Student student) {
+    public static StudentResponse toStudentResponse(Student student) {
         return StudentResponse.builder()
                 .id(student.getId())
                 .firstName(student.getFirstName())
@@ -54,7 +54,7 @@ public class StudentMapper {
                 .build();
     }
 
-    public List<StudentResponse> StudentDetails(List<Student> students) {
+    public static List<StudentResponse> StudentDetails(List<Student> students) {
         ArrayList<StudentResponse> details = new ArrayList<StudentResponse>();
         for (Student student : students) {
             details.add(
@@ -79,7 +79,7 @@ public class StudentMapper {
         return details;
     }
 
-    public StudentResponse StudentDetail(Optional<Student> students) {
+    public static StudentResponse StudentDetail(Optional<Student> students) {
         {
                 if(students.isPresent()) {
                     Student student = students.get();

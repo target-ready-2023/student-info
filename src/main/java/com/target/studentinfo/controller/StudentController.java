@@ -12,39 +12,36 @@ import java.util.Optional;
 @RestController
 public class StudentController {
     private final StudentService studentService;
-    @Autowired
-    private final StudentMapper studentMapper;
 
-    public StudentController(StudentService studentService , StudentMapper studentMapper ) {
+    public StudentController(StudentService studentService  ) {
         this.studentService = studentService;
-        this.studentMapper = studentMapper;
     }
 
     @GetMapping("/students")
     public List<StudentResponse> getAllStudentInfo(@RequestParam(defaultValue="true") Boolean isActive){
         List<Student> student = studentService.getAllStudentInfo(isActive);
-        return studentMapper.StudentDetails(student);
+        return StudentMapper.StudentDetails(student);
     }
 
     @GetMapping("/students/{id}")
     public StudentResponse getStudentById(@PathVariable("id") long id , @RequestParam(defaultValue="true") Boolean isActive){
         Optional<Student> student = studentService.getStudentById(id, isActive);
-        return studentMapper.StudentDetail(student);
+        return StudentMapper.StudentDetail(student);
     }
 
     @PostMapping("/students")
     public StudentResponse addStudent(@RequestBody StudentRequest studentRequest){
-        Student student = studentMapper.toStudent(studentRequest);
+        Student student = StudentMapper.toStudent(studentRequest);
         studentService.addStudent(student);
-        return studentMapper.toStudentResponse(student);
+        return StudentMapper.toStudentResponse(student);
     }
 
     @PutMapping("/students/{id}")
     public StudentResponse updateStudent(@RequestBody StudentRequest studentRequest, @PathVariable("id") long id) {
-        Student student = studentMapper.toStudent(studentRequest);
+        Student student = StudentMapper.toStudent(studentRequest);
         student.setId(id);
         studentService.updateStudent(student);
-        return studentMapper.toStudentResponse(student);
+        return StudentMapper.toStudentResponse(student);
     }
 
     @DeleteMapping("/students/{id}")
