@@ -25,7 +25,7 @@ public class StudentController {
     }
 
     @GetMapping("/students/{id}")
-    public Optional<Student> getStudentById(@PathVariable("id") UUID id){
+    public Optional<Student> getStudentById(@PathVariable("id") long id){
         return studentService.getStudentById(id);
     }
 
@@ -35,7 +35,7 @@ public class StudentController {
     }
 
     @PutMapping("/students/{id}")
-    public StudentResponse updateStudent(@RequestBody StudentRequest studentRequest, @PathVariable("id") UUID id) {
+    public StudentResponse updateStudent(@RequestBody StudentRequest studentRequest, @PathVariable("id") long id) {
         Optional<Student> checkExists = getStudentById(id);
         if (! checkExists.isPresent())
             throw new RuntimeException("Student ID" + id + " not found");
@@ -46,8 +46,7 @@ public class StudentController {
     }
 
     @DeleteMapping("/students/{id}")
-    public void deleteStudent(@PathVariable("id") UUID id) {
+    public void deleteStudent(@PathVariable("id") long id) {
         studentService.deleteStudent(id);
     }
-
    }
