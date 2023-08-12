@@ -3,15 +3,17 @@ package com.target.studentinfo.exception;
 import org.springframework.http.HttpStatus;
 
 public class InternalErrorException extends RuntimeException {
-    private int errorCode;
+    private final ErrorCode errorCode;
 
-    public InternalErrorException(String message, int errorCode) {
+    public InternalErrorException(ErrorCode errorCode, String message) {
         super(message);
         this.errorCode = errorCode;
     }
 
-    public int getErrorCode() {
+    public ErrorCode getErrorCode() {
+
         return errorCode;
+
     }
 
 }

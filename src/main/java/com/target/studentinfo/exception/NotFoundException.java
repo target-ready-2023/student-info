@@ -2,15 +2,17 @@ package com.target.studentinfo.exception;
 
 
 public class NotFoundException extends RuntimeException {
-    private int errorCode;
+    private final ErrorCode errorCode;
 
-    public NotFoundException(String message, int errorCode) {
+    public NotFoundException(ErrorCode errorCode, String message) {
         super(message);
         this.errorCode = errorCode;
     }
 
-    public int getErrorCode() {
+    public ErrorCode getErrorCode() {
+
         return errorCode;
+
     }
 
 

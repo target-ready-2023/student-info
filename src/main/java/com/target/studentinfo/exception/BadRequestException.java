@@ -1,16 +1,15 @@
 package com.target.studentinfo.exception;
 
-import org.springframework.http.HttpStatus;
 
 public class BadRequestException extends RuntimeException {
-    private String errorCode;
+    private final ErrorCode errorCode;
 
-    public BadRequestException(String message, HttpStatus errorCode) {
+    public BadRequestException(ErrorCode errorCode, String message) {
         super(message);
-        this.errorCode = String.valueOf(errorCode);
+        this.errorCode = errorCode;
     }
 
-    public String getErrorCode() {
+    public ErrorCode getErrorCode() {
         return errorCode;
     }
 
