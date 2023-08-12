@@ -20,21 +20,14 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    public List<Student> getAllStudentInfo(){
+    public List<Student> getAllStudentInfo(Boolean isActive){
 
-        return studentRepository.findAll();
+        return (isActive ? studentRepository.findActive() : studentRepository.findAll());
     }
 
-    public Optional<Student> getStudentById(UUID id){
-        return studentRepository.findById(id);
-    }
+    public Optional<Student> getStudentById(UUID id, Boolean isActive){
 
-    public Optional<Student> findActiveID(UUID id) {
-        return studentRepository.findActiveID(id);
-    };
-
-    public List<Student> findActive() {
-        return studentRepository.findActive();
+        return (isActive ? studentRepository.findActiveID(id) : studentRepository.findById(id));
     }
 
     public void softDelete(UUID id) {
@@ -47,32 +40,6 @@ public class StudentService {
     public Student updateStudent(Student student) {
         return studentRepository.save(student);
     };
-
-    public void deleteStudent(UUID id) {
-        studentRepository.deleteById(id);
-    };
-
-    public StudentResponse addNewStudent(StudentRequest studentRequest) {
-
-        Student student = StudentMapper.MAPPER.fromReqToModel(studentRequest);
-        studentRepository.save(student);
-        return StudentMapper.MAPPER.fromModelToResponse(student);
-    };
-    public StudentResponse updateStudent(StudentRequest studentRequest,UUID id) {
-
-        Optional<Student> checkExists = getStudentById(id);
-        if (! checkExists.isPresent())
-            throw new RuntimeException("Employee ID" + id + " not found");
-        Student student = StudentMapper.MAPPER.fromReqToModel(studentRequest);
-        student.setId(id);
-        studentRepository.save(student);
-        return StudentMapper.MAPPER.fromModelToResponse(student);
-    };
-
-
-
-
-
 
 }
 

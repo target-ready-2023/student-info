@@ -14,23 +14,20 @@ import java.util.UUID;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, UUID>{
-    String query1 = "SELECT s FROM Student s where s.isActive=true";
-    String query2 = "UPDATE Student s SET s.isActive=false where id=?1";
+    String findActiveStudents = "SELECT s FROM Student s where s.isActive=true";
+    String softDelete = "UPDATE Student s SET s.isActive=false where id=?1";
+    String findActiveStudentsID = "SELECT s FROM Student s where s.isActive=true and id=?1";
 
-    String query3 = "SELECT s FROM Student s where s.isActive=true and id=?1";
 
-
-    @Query(query1)
+    @Query(findActiveStudents)
     public List<Student> findActive();
 
-    @Query(query2)
+    @Query(softDelete)
     @Modifying
     @Transactional
     public void softDelete(UUID id);
 
-    @Query(query3)
+    @Query(findActiveStudentsID)
     public Optional<Student> findActiveID(UUID id);
 
 }
-
-

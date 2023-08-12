@@ -20,27 +20,13 @@ public class StudentController {
 
     @GetMapping("/students")
     public List<Student> getAllStudentInfo(@RequestParam(defaultValue="true") Boolean isActive){
-
-        if(isActive==false)
-        {
-            return studentService.getAllStudentInfo();
-        }
-        else
-        {
-            return studentService.findActive();
-        }
+        return studentService.getAllStudentInfo(isActive);
     }
 
     @GetMapping("/students/{id}")
     public Optional<Student> getStudentById(@PathVariable("id") UUID id, @RequestParam(defaultValue="true") Boolean isActive){
-        if(isActive==false)
-        {
-            return studentService.getStudentById(id);
-        }
-        else
-        {
-            return studentService.findActiveID(id);
-        }
+
+        return studentService.getStudentById(id, isActive);
     }
 
 
@@ -58,16 +44,6 @@ public class StudentController {
     @DeleteMapping("/students/{id}")
     public void softDelete(@PathVariable("id") UUID id) {
         studentService.softDelete(id);
-    }
-
-    @PostMapping("/students/resp")
-    public StudentResponse addNewStudentResponse(@RequestBody StudentRequest studentRequest) {
-        return studentService.addNewStudent(studentRequest);
-    }
-
-    @PutMapping("/students/{id}/resp")
-    public StudentResponse updateStudentResponse(@RequestBody StudentRequest studentRequest, @PathVariable("id") UUID id) {
-        return studentService.updateStudent(studentRequest,id);
     }
 
    }
