@@ -4,7 +4,6 @@ import com.target.studentinfo.dto.request.StudentRequest;
 import com.target.studentinfo.dto.response.StudentResponse;
 import com.target.studentinfo.model.Student;
 import com.target.studentinfo.service.StudentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +27,6 @@ public class StudentController {
     @GetMapping("/students/{id}")
     public StudentResponse getStudentById(@PathVariable("id") long id , @RequestParam(defaultValue="true") Boolean isActive){
         Optional<Student> student = studentService.getStudentById(id, isActive);
-        System.out.println(student);
         return studentMapper.StudentDetail(student);
     }
 

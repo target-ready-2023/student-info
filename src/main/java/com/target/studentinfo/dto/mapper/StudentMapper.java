@@ -6,7 +6,6 @@ import com.target.studentinfo.model.Student;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import org.mapstruct.Mapper;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -83,9 +82,7 @@ public class StudentMapper {
 
     public StudentResponse StudentDetail(Optional<Student> students) {
         {
-            System.out.println(students);
                 if(students.isPresent()) {
-                    System.out.println(students.get());
                     Student student = students.get();
                     return StudentResponse.builder()
                             .id(student.getId())

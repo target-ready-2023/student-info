@@ -1,12 +1,7 @@
 package com.target.studentinfo.model;
-
-
 import jakarta.persistence.*;
 import lombok.*;
 import org.antlr.v4.runtime.misc.NotNull;
-
-import java.util.UUID;
-
 
 @Getter
 @Setter
