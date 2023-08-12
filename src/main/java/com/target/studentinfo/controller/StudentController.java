@@ -1,59 +1,51 @@
 package com.target.studentinfo.controller;
-
+import com.target.studentinfo.dto.mapper.StudentMapper;
 import com.target.studentinfo.dto.request.StudentRequest;
 import com.target.studentinfo.dto.response.StudentResponse;
 import com.target.studentinfo.model.Student;
 import com.target.studentinfo.service.StudentService;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
-@RequestMapping("/student_information_service/v1")
 public class StudentController {
     private final StudentService studentService;
+    private final StudentMapper studentMapper;
 
-    public StudentController(StudentService studentService) {
+    public StudentController(StudentService studentService , StudentMapper studentMapper  ) {
         this.studentService = studentService;
+        this.studentMapper = studentMapper;
     }
 
     @GetMapping("/students")
-    public List<Student> getAllStudentInfo(){
-
-        return studentService.getAllStudentInfo();
+    public List<StudentResponse> getAllStudentInfo(@RequestParam(defaultValue="true") Boolean isActive){
+        List<Student> students = studentService.getAllStudents(isActive);
+        return studentMapper.toStudentResponseList(students);
     }
 
-    @GetMapping("/student/{id}")
-    public Optional<Student> getStudentById(@PathVariable("id") UUID id){
-        return studentService.getStudentById(id);
+    @GetMapping("/students/{id}")
+    public StudentResponse getStudentById(@PathVariable("id") long id , @RequestParam(defaultValue="true") Boolean isActive){
+        Optional<Student> student = studentService.getStudent(id, isActive);
+        return studentMapper.toStudentResponse(student);
     }
 
-    @PostMapping("/student")
-    public Student addNewStudent(@RequestBody Student student){
-        return studentService.addNewStudent(student);
+    @PostMapping("/students")
+    public StudentResponse addStudent(@RequestBody StudentRequest studentRequest){
+        Student student = studentMapper.toStudent(studentRequest);
+        Student addedStudent = studentService.addStudent(student);
+        return studentMapper.toStudentResponse(addedStudent);
     }
 
-    @PutMapping("/student/{id}")
-    public Student updateStudent(@RequestBody Student student) {
-        return studentService.updateStudent(student);
+    @PutMapping("/students/{id}")
+    public StudentResponse updateStudent(@RequestBody StudentRequest studentRequest, @PathVariable("id") long id) {
+        Student student = studentMapper.toStudent(studentRequest);
+        Student updatedStudent = studentService.updateStudent(student,id);
+        return studentMapper.toStudentResponse(updatedStudent);
     }
 
-
-    @DeleteMapping("/student/{id}")
-    public void deleteStudent(@PathVariable("id") UUID id) {
+    @DeleteMapping("/students/{id}")
+    public void deleteStudent(@PathVariable("id") long id) {
         studentService.deleteStudent(id);
     }
-
-    @PostMapping("/student/resp")
-    public StudentResponse addNewStudentResponse(@RequestBody StudentRequest studentRequest) {
-        return studentService.addNewStudent(studentRequest);
-    }
-
-    @PutMapping("/student/{id}/resp")
-    public StudentResponse updateStudentResponse(@RequestBody StudentRequest studentRequest, @PathVariable("id") UUID id) {
-        return studentService.updateStudent(studentRequest,id);
-    }
-
    }

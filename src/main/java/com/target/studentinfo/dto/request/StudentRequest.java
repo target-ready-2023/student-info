@@ -8,8 +8,6 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class StudentRequest implements Serializable {
-
-
     private String firstName;
     private String lastName;
     private String emailId;
@@ -23,5 +21,6 @@ public class StudentRequest implements Serializable {
     private String extraCurricular;
     private String allergies;
     private String transport;
+    private boolean isActive = Boolean.TRUE;
 
 }
