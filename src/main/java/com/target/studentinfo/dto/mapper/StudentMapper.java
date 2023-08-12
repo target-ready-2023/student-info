@@ -1,5 +1,4 @@
 package com.target.studentinfo.dto.mapper;
-
 import com.target.studentinfo.dto.request.StudentRequest;
 import com.target.studentinfo.dto.response.StudentResponse;
 import com.target.studentinfo.model.Student;
@@ -32,6 +31,7 @@ public class StudentMapper {
                 .extraCurricular(studentRequest.getExtraCurricular())
                 .allergies(studentRequest.getAllergies())
                 .transport(studentRequest.getTransport())
+                .isActive(studentRequest.isActive())
                 .build();
     }
 

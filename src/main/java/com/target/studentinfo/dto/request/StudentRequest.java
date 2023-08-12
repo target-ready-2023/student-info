@@ -21,6 +21,6 @@ public class StudentRequest implements Serializable {
     private String extraCurricular;
     private String allergies;
     private String transport;
-    private boolean isActive = true;
+    private boolean isActive = Boolean.TRUE;
 
 }
