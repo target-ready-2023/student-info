@@ -6,4 +6,5 @@ public enum ErrorCode {
     INVALID_LAST_NAME,
     INVALID_STANDARD,
     STUDENT_NOT_FOUND
+
 }

@@ -35,6 +35,7 @@ public class StudentService {
         if (!studentRepository.existsById(id)) {
             throw new NotFoundException(ErrorCode.STUDENT_NOT_FOUND, "student id not found");
         }
+
         return studentRepository.save(student);
     }
 

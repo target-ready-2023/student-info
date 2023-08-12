@@ -11,7 +11,9 @@ public class InternalErrorException extends RuntimeException {
     }
 
     public ErrorCode getErrorCode() {
+
         return errorCode;
+
     }
 
 }

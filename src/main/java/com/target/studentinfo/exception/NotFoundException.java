@@ -10,7 +10,9 @@ public class NotFoundException extends RuntimeException {
     }
 
     public ErrorCode getErrorCode() {
+
         return errorCode;
+
     }
 
 

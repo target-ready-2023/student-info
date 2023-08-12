@@ -21,6 +21,5 @@ public class StudentValidator {
         if (student.getStandard() < 1 || student.getStandard() > 10) {
             throw new BadRequestException(ErrorCode.INVALID_STANDARD, "standard must be between 1 and 10");
         }
-
     }
 }

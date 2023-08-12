@@ -12,4 +12,5 @@ public class BadRequestException extends RuntimeException {
     public ErrorCode getErrorCode() {
         return errorCode;
     }
+
 }
