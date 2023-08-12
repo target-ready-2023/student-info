@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long>{
     String getActiveStudentsQuery = "SELECT s FROM Student s where s.isActive=true";
-    String getInactiveStudentsQuery = "UPDATE Student s SET s.isActive=false where id=?1";
+    String softDeleteStudentQuery = "UPDATE Student s SET s.isActive=false where id=?1";
 
     String getActiveStudentQuery = "SELECT s FROM Student s where s.isActive=true and id=?1";
 
@@ -20,7 +20,7 @@ public interface StudentRepository extends JpaRepository<Student, Long>{
     @Query(getActiveStudentsQuery)
     public List<Student> findAllActive();
 
-    @Query(getInactiveStudentsQuery)
+    @Query(softDeleteStudentQuery)
     @Modifying
     @Transactional
     public void softDeleteStudent(long id);

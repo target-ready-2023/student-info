@@ -20,8 +20,8 @@ public class StudentController {
 
     @GetMapping("/students")
     public List<StudentResponse> getAllStudentInfo(@RequestParam(defaultValue="true") Boolean isActive){
-        List<Student> student = studentService.getAllStudents(isActive);
-        return studentMapper.toStudentResponseList(student);
+        List<Student> students = studentService.getAllStudents(isActive);
+        return studentMapper.toStudentResponseList(students);
     }
 
     @GetMapping("/students/{id}")
