@@ -2,14 +2,14 @@ package com.target.studentinfo.exception;
 
 
 public class BadRequestException extends RuntimeException {
-    private String errorCode;
+    private final ErrorCode errorCode;
 
-    public BadRequestException(String errorCode, String message) {
+    public BadRequestException(ErrorCode errorCode, String message) {
         super(message);
         this.errorCode = errorCode;
     }
 
-    public String getErrorCode() {
+    public ErrorCode getErrorCode() {
         return errorCode;
     }
 }

@@ -1,11 +1,11 @@
-package com.target.studentinfo.dto.validator;
+package com.target.studentinfo.model;
 
 import com.target.studentinfo.exception.BadRequestException;
 import com.target.studentinfo.exception.ErrorCode;
 import com.target.studentinfo.model.Student;
 
 public class StudentValidator {
-    public static void validateStudentRequest(Student student) {
+    public static void validateStudent(Student student) {
         if (student == null) {
             throw new BadRequestException(ErrorCode.INVALID_REQUEST_BODY, "request body cannot be null");
         }
