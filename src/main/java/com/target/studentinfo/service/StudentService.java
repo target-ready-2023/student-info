@@ -14,25 +14,24 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    public List<Student> getAllStudentInfo(Boolean isActive){
-        return (isActive ? studentRepository.findActive() : studentRepository.findAll());
+    public List<Student> getAllStudents(Boolean isActive){
+        return isActive ? studentRepository.findAllActive() : studentRepository.findAll();
     }
 
-    public Optional<Student> getStudentById(long id , Boolean isActive){
-       return( isActive ? studentRepository.findActiveID(id) : studentRepository.findById(id));
+    public Optional<Student> getStudent(long id , Boolean isActive){
+       return isActive ? studentRepository.findByIdActive(id) : studentRepository.findById(id);
     }
 
     public Student addStudent(Student student){
         return studentRepository.save(student);
     }
 
-    public Student updateStudent(Student student) {
+    public Student updateStudent(Student student , long id) {
+        student.setId(id);
         return studentRepository.save(student);
     };
 
-    public void softDelete(long id) {
-        studentRepository.softDelete(id);
-    }
+    public void deleteStudent(long id) {studentRepository.softDeleteStudent(id);}
 }
 
 

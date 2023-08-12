@@ -17,32 +17,32 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private long id;
-    @Column(name = "first_name", length = 100)
+    @Column(name = "first_name")
     @NotNull
     private String firstName;
-    @Column(name = "last_name", length = 100)
+    @Column(name = "last_name")
     private String lastName;
-    @Column(name = "email", length = 100)
+    @Column(name = "email")
     private String emailId;
-    @Column(name = "blood_group", length = 3)
+    @Column(name = "blood_group")
     private String bloodGroup;
-    @Column(name = "father_name", length = 100)
+    @Column(name = "father_name")
     private String fatherName;
-    @Column(name = "mother_name", length = 100)
+    @Column(name = "mother_name")
     private String motherName;
     @Column(name = "age")
     private int age;
-    @Column(name = "gender",length = 50)
+    @Column(name = "gender")
     private String gender;
     @Column(name = "address")
     private String address;
-    @Column(name = "class", length = 10)
+    @Column(name = "class")
     private int standard;
     @Column(name = "extracurricular")
     private String extraCurricular;
     @Column(name = "allergies")
     private String allergies;
-    @Column(name = "transport", length = 100)
+    @Column(name = "transport")
     private String transport;
     @Column(name = "is_active")
     private boolean isActive = Boolean.TRUE;

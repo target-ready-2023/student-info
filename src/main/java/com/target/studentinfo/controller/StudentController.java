@@ -20,33 +20,32 @@ public class StudentController {
 
     @GetMapping("/students")
     public List<StudentResponse> getAllStudentInfo(@RequestParam(defaultValue="true") Boolean isActive){
-        List<Student> student = studentService.getAllStudentInfo(isActive);
-        return studentMapper.StudentDetails(student);
+        List<Student> student = studentService.getAllStudents(isActive);
+        return studentMapper.toStudentResponseList(student);
     }
 
     @GetMapping("/students/{id}")
     public StudentResponse getStudentById(@PathVariable("id") long id , @RequestParam(defaultValue="true") Boolean isActive){
-        Optional<Student> student = studentService.getStudentById(id, isActive);
-        return studentMapper.StudentDetail(student);
+        Optional<Student> student = studentService.getStudent(id, isActive);
+        return studentMapper.toStudentResponse(student);
     }
 
     @PostMapping("/students")
     public StudentResponse addStudent(@RequestBody StudentRequest studentRequest){
         Student student = studentMapper.toStudent(studentRequest);
-        studentService.addStudent(student);
-        return studentMapper.toStudentResponse(student);
+        Student addedStudent = studentService.addStudent(student);
+        return studentMapper.toStudentResponse(addedStudent);
     }
 
     @PutMapping("/students/{id}")
     public StudentResponse updateStudent(@RequestBody StudentRequest studentRequest, @PathVariable("id") long id) {
         Student student = studentMapper.toStudent(studentRequest);
-        student.setId(id);
-        studentService.updateStudent(student);
-        return studentMapper.toStudentResponse(student);
+        Student updatedStudent = studentService.updateStudent(student,id);
+        return studentMapper.toStudentResponse(updatedStudent);
     }
 
     @DeleteMapping("/students/{id}")
-    public void softDelete(@PathVariable("id") long id) {
-        studentService.softDelete(id);
+    public void deleteStudent(@PathVariable("id") long id) {
+        studentService.deleteStudent(id);
     }
    }

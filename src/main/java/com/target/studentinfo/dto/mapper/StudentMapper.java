@@ -54,56 +54,18 @@ public class StudentMapper {
                 .build();
     }
 
-    public List<StudentResponse> StudentDetails(List<Student> students) {
-        System.out.println(students);
-        ArrayList<StudentResponse> details = new ArrayList<StudentResponse>();
+    public List<StudentResponse> toStudentResponseList(List<Student> students) {
+        ArrayList<StudentResponse> studentResponses = new ArrayList<StudentResponse>();
         for (Student student : students) {
-            details.add(
-                    StudentResponse.builder()
-                            .id(student.getId())
-                            .firstName(student.getFirstName())
-                            .lastName(student.getLastName())
-                            .emailId(student.getEmailId())
-                            .bloodGroup(student.getBloodGroup())
-                            .fatherName(student.getFatherName())
-                            .motherName(student.getMotherName())
-                            .age(student.getAge())
-                            .gender(student.getGender())
-                            .address(student.getAddress())
-                            .standard(student.getStandard())
-                            .extraCurricular(student.getExtraCurricular())
-                            .allergies(student.getAllergies())
-                            .transport(student.getTransport())
-                            .build()
-            );
+            StudentResponse studentResponse = toStudentResponse(student);
+            studentResponses.add(studentResponse);
         }
-        return details;
+        return studentResponses;
     }
 
-    public StudentResponse StudentDetail(Optional<Student> students) {
+    public StudentResponse toStudentResponse(Optional<Student> students) {
         {
-                if(students.isPresent()) {
-                    Student student = students.get();
-                    return StudentResponse.builder()
-                            .id(student.getId())
-                            .firstName(student.getFirstName())
-                            .lastName(student.getLastName())
-                            .emailId(student.getEmailId())
-                            .bloodGroup(student.getBloodGroup())
-                            .fatherName(student.getFatherName())
-                            .motherName(student.getMotherName())
-                            .age(student.getAge())
-                            .gender(student.getGender())
-                            .address(student.getAddress())
-                            .standard(student.getStandard())
-                            .extraCurricular(student.getExtraCurricular())
-                            .allergies(student.getAllergies())
-                            .transport(student.getTransport())
-                            .build();
-                }
-             else{
-                 return null;
-            }
+            return students.isPresent() ? toStudentResponse(students.get()) : null;
         }
 
     }
