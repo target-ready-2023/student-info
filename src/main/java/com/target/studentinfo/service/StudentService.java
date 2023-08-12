@@ -1,4 +1,6 @@
 package com.target.studentinfo.service;
+import com.target.studentinfo.exception.ErrorCode;
+import com.target.studentinfo.exception.NotFoundException;
 import com.target.studentinfo.model.Student;
 import com.target.studentinfo.dto.validator.StudentValidator;
 import com.target.studentinfo.respository.StudentRepository;
@@ -24,11 +26,16 @@ public class StudentService {
     }
 
     public Student addStudent(Student student){
+        StudentValidator.validateStudentRequest(student);
         return studentRepository.save(student);
     }
 
     public Student updateStudent(Student student , long id) {
         student.setId(id);
+        StudentValidator.validateStudentRequest(student);
+        if (!studentRepository.existsById(id)) {
+            throw new NotFoundException(ErrorCode.STUDENT_NOT_FOUND, "student id not found");
+        }
         return studentRepository.save(student);
     };
 

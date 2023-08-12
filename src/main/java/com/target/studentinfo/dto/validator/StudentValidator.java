@@ -1,26 +1,26 @@
 package com.target.studentinfo.dto.validator;
 
-import com.target.studentinfo.dto.request.StudentRequest;
 import com.target.studentinfo.exception.BadRequestException;
 import com.target.studentinfo.exception.ErrorCode;
-import org.springframework.http.HttpStatus;
+import com.target.studentinfo.model.Student;
 
 public class StudentValidator {
-    public static void validateStudentRequest(StudentRequest studentRequest) {
-        if (studentRequest == null) {
-            throw new BadRequestException(ErrorCode.INVALID_REQUEST_BODY, HttpStatus.BAD_REQUEST);
+    public static void validateStudentRequest(Student student) {
+        if (student == null) {
+            throw new BadRequestException(ErrorCode.INVALID_REQUEST_BODY, "request body cannot be null");
         }
 
-        if (studentRequest.getFirstName() == null) {
-            throw new BadRequestException(ErrorCode.INVALID_FIRST_NAME, HttpStatus.BAD_REQUEST);
+        if (student.getFirstName() == null) {
+            throw new BadRequestException(ErrorCode.INVALID_FIRST_NAME, "first name cannot be null");
         }
 
-        if (studentRequest.getLastName() == null) {
-            throw new BadRequestException(ErrorCode.INVALID_LAST_NAME, HttpStatus.BAD_REQUEST);
+        if (student.getLastName() == null) {
+            throw new BadRequestException(ErrorCode.INVALID_LAST_NAME, "last name cannot be null");
         }
 
-        if (studentRequest.getEmailId() == null) {
-            throw new BadRequestException(ErrorCode.INVALID_EMAIL_ID, HttpStatus.BAD_REQUEST);
+        if (student.getStandard() < 1 || student.getStandard() > 10) {
+            throw new BadRequestException(ErrorCode.INVALID_STANDARD, "standard must be between 1 and 10");
         }
+
     }
 }
