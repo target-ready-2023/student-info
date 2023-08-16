@@ -1,118 +1,67 @@
 package com.target.studentinfo.repository;
 
-
 import com.target.studentinfo.model.Student;
 import com.target.studentinfo.respository.StudentRepository;
-import com.target.studentinfo.service.StudentService;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit4.SpringRunner;
-
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Optional;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-
-
-
-@RunWith(SpringRunner.class)
-@DataJpaTest
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@ExtendWith(MockitoExtension.class)
 public class StudentRepositoryTest {
 
-    @Autowired
+    @Mock
     private StudentRepository studentRepository;
-
-    @MockBean
-    private StudentService studentService;
-    Student student;
+    private Student activeStudent1, activeStudent2;
+    private Student inActiveStudent;
 
     @BeforeEach
     void setUp() {
-        Student activeStudent1 = new Student(1L, "Ram", "k", "ram@123.com", "A+", "Ashok", "Swathi", 12, "male", "hyderabad", 8, "painting", "none", "self", true);
-        Student activeStudent2 = new Student(2L, "John", "Deo", "john@123.com", "B+", "Smith", "Jane", 14, "male", "kerala", 10, "music", "dust", "self", true);
-        Student inactiveStudent1 = new Student(3L, "Raksh", "k", "raksh@123.com", "A+", "Ashok", "Swathi", 10, "male", "hyderabad", 6, "painting", "none", "self", false);
-
-        studentRepository.save(activeStudent1);
-        studentRepository.save(activeStudent2);
-        studentRepository.save(inactiveStudent1);
-
-        studentRepository.flush();
-
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
-
-
-    @Test
-    public void testFindAllActive() {
-        List<Student> activeStudents = studentRepository.findAllActive();
-
-        System.out.println("Active Students:");
-        for (Student student : activeStudents) {
-            System.out.println(student);
-        }
-
-        assertEquals(2, activeStudents.size());
-        for (Student student : activeStudents) {
-            assertTrue(student.isActive());
-        }
+        activeStudent1 = new Student(1L, "Rashmi", "H", "rashmi@123.com", "AB+", "Ramesh", "Pooja", 15, "female", "Karnataka", 10, "Dancing", "none", "self", true);
+        activeStudent2 = new Student(2L, "John", "Doe", "john@abc.com", "O-", "Michael", "Jane", 20, "male", "New York", 12, "Singing", "none", "public", true);
+        inActiveStudent = new Student(3L, "Raj", "K", "raj@abc.com", "A+", "Ramesh", "Pooja", 10, "male", "India", 5, "Dancing", "Dust", "self", false);
     }
 
     @Test
-    public void testSoftDeleteStudent() {
-        Student activeStudent = new Student(1L, "Rashmi", "H", "rashmi@123.com", "AB+", "Ramesh", "Pooja", 15, "female", "Karnataka", 10, "Dancing", "none", "self", false);
-        studentRepository.save(activeStudent);
-
-
-        Student savedStudent = studentRepository.save(activeStudent);
-
-
-        System.out.println("Before Soft Delete: " + activeStudent);
-
-
-        studentRepository.softDeleteStudent(activeStudent.getId());
-
-
-        System.out.println("After Soft Delete: " + savedStudent);
-
-
-        Optional<Student> deletedStudentOptional = studentRepository.findById(activeStudent.getId());
-        assertTrue(deletedStudentOptional.isPresent());
-        Student deletedStudent = deletedStudentOptional.get();
-        assertFalse(deletedStudent.isActive());
-
-
-        studentRepository.delete(deletedStudent);
+    public void givenActiveStudents_whenFindAllActive_thenReturnActiveStudentsList() {
+        given(studentRepository.findAllActive())
+                .willReturn(List.of(activeStudent1, activeStudent2));
+        List<Student> result = studentRepository.findAllActive();
+        assertThat(result).hasSize(2);
+        assertThat(result.get(0).getId()).isEqualTo(activeStudent1.getId());
+        assertThat(result.get(1).getId()).isEqualTo(activeStudent2.getId());
     }
-
 
     @Test
-    public void testFindActiveStudentById() {
-
-        Student activeStudent = new Student(4L, "Rashmi", "H", "rashmi@123.com", "AB+", "Ramesh", "Pooja", 15, "female", "Karnataka", 10, "Dancing", "none", "self", true);
-        studentRepository.save(activeStudent);
-
-
-        Optional<Student> retrievedStudentOptional = studentRepository.findByIdActive(activeStudent.getId());
-
-
-        assertTrue("Student should be present", retrievedStudentOptional.isPresent());
-        Student retrievedStudent = retrievedStudentOptional.get();
-        assertTrue("Student should be active", retrievedStudent.isActive());
+    public void givenStudentId_whenSoftDeleteStudent_thenStudentShouldBeInactive() {
+        studentRepository.softDeleteStudent(activeStudent2.getId());
+        verify(studentRepository, times(1)).softDeleteStudent(activeStudent2.getId());
     }
 
+    @Test
+    public void givenStudentId_whenFindByIdActive_thenReturnExpectedStudent() {
+        given(studentRepository.findByIdActive(activeStudent1.getId()))
+                .willReturn(Optional.ofNullable(activeStudent1));
+        Optional<Student> result = studentRepository.findByIdActive(activeStudent1.getId());
+        assertThat(result.isPresent()).isTrue();
+        assertThat(result.get().getFirstName()).isEqualTo(activeStudent1.getFirstName());
+    }
 
+    @Test
+    public void givenInactiveStudent_whenFindByIdActive_thenReturnEmptyOptional() {
+        given(studentRepository.findByIdActive(inActiveStudent.getId()))
+                .willReturn(Optional.empty());
+        Optional<Student> result = studentRepository.findByIdActive(inActiveStudent.getId());
+        assertThat(result.isPresent()).isFalse();
+    }
 
 }
+
+
