@@ -42,9 +42,9 @@ public class StudentControllerTest {
     private List<Student> mockStudents=new ArrayList<>();
     @BeforeEach
     void setup(){
-        student1=new Student(1L, "Ram", "k", "ram@123.com", "A+", "Ashok", "Swathi", 12, "male", "hyderabad", 8, "painting", "none", "self",true );
+        student1=new Student(1L, "Ram", "K", "ram@123.com", "A+", "Ashok", "Swathi", 12, "male", "hyderabad", 8, "painting", "none", "self",true );
         student2=new Student(2L, "John", "Deo", "john@123.com", "B+", "Smith", "Jane", 14, "male", "kerala", 10, "music", "dust", "self", true);
-        student3=new Student(3L, "Raksh", "k", "raksh@123.com", "A+", "Ashok", "Swathi", 10, "male", "hyderabad", 6, "painting", "none", "self", false);
+        student3=new Student(3L, "Raksh", "K", "raksh@123.com", "A+", "Ashok", "Swathi", 10, "male", "hyderabad", 6, "painting", "none", "self", false);
         mockStudents.add(student1);
         mockStudents.add(student2);
         mockStudents.add(student3);

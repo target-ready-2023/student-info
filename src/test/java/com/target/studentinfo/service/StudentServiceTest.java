@@ -54,7 +54,7 @@ public class StudentServiceTest {
         List<Student> expectedStudents=studentService.getAllStudents(true);
         assertEquals(mockStudents.size(),expectedStudents.size());
         assertEquals(expectedStudents,mockStudents);
-        }
+    }
     @Test
     void givenStudentRequest_whenAddStudent_thenReturnStudentResponse(){
 
