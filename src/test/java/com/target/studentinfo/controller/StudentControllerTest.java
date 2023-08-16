@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.target.studentinfo.dto.request.StudentRequest;
 import com.target.studentinfo.exception.BadRequestException;
 import com.target.studentinfo.exception.ErrorCode;
+import com.target.studentinfo.exception.ErrorMessage;
 import com.target.studentinfo.model.Student;
 import com.target.studentinfo.service.StudentService;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,14 +20,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -38,94 +38,74 @@ public class StudentControllerTest {
 
     @MockBean
     private StudentService studentService;
-    Student student;
-    private List<Student> mockStudents;
+    Student student1,student2,student3;
+    private List<Student> mockStudents=new ArrayList<>();
     @BeforeEach
     void setup(){
-        mockStudents = Arrays.asList(
-                new Student(1L, "Ram", "k", "ram@123.com", "A+", "Ashok", "Swathi", 12, "male", "hyderabad", 8, "painting", "none", "self", false),
-                new Student(2L, "John", "Deo", "john@123.com", "B+", "Smith", "Jane", 14, "male", "kerala", 10, "music", "dust", "self", true),
-                new Student(3L, "Raksh", "k", "raksh@123.com", "A+", "Ashok", "Swathi", 10, "male", "hyderabad", 6, "painting", "none", "self", false)
-        );
-        student=Student.builder()
-                .id(1L)
-                .firstName("Ram")
-                .lastName("K")
-                .emailId("ram@123.com")
-                .bloodGroup("A+")
-                .fatherName("Ashok")
-                .motherName("Swathi")
-                .age(12)
-                .gender("male")
-                .address("Hyderabad")
-                .standard(8)
-                .extraCurricular("painting")
-                .allergies("none")
-                .transport("self")
-                .isActive(true).build();
-
-
+        student1=new Student(1L, "Ram", "k", "ram@123.com", "A+", "Ashok", "Swathi", 12, "male", "hyderabad", 8, "painting", "none", "self",true );
+        student2=new Student(2L, "John", "Deo", "john@123.com", "B+", "Smith", "Jane", 14, "male", "kerala", 10, "music", "dust", "self", true);
+        student3=new Student(3L, "Raksh", "k", "raksh@123.com", "A+", "Ashok", "Swathi", 10, "male", "hyderabad", 6, "painting", "none", "self", false);
+        mockStudents.add(student1);
+        mockStudents.add(student2);
+        mockStudents.add(student3);
     }
     @Test
-    public void givenStudentId_whenGetStudentById_thenReturnStudentObject() throws Exception {
-        long studentId = 1L;
-        when(studentService.getStudent(studentId, true)).thenReturn(Optional.of(student));
+    public void givenStudentId_whenGetStudentById_thenReturnStudentResponse() throws Exception {
+        when(studentService.getStudent(student1.getId(), true)).thenReturn(Optional.of(student1));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/students/{id}", studentId))
+        mockMvc.perform(MockMvcRequestBuilders.get("/students/{id}", student1.getId()))
                 .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("Ram"));
-        verify(studentService).getStudent(1L, true);
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(student1.getId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value(student1.getFirstName()));
+
+        verify(studentService).getStudent(student1.getId(), true);
     }
     @Test
-    public void givenListOfEmployees_whenGetAllEmployees_thenReturnEmployeesList() throws Exception {
-        when(studentService.getAllStudents(true)).thenReturn(mockStudents);
-
+    public void givenListOfStudents_whenGetAllStudents_thenReturnStudentsList() throws Exception {
+        List<Student> activeStudents=new ArrayList<>();
+        activeStudents.add(student1);
+        activeStudents.add(student2);
+        when(studentService.getAllStudents(true)).thenReturn(activeStudents);
         mockMvc.perform(MockMvcRequestBuilders.get("/students"))
                 .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].firstName").value("Ram"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(2))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].firstName").value("John"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(activeStudents.size()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(activeStudents.get(0).getId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].firstName").value(activeStudents.get(0).getFirstName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(activeStudents.get(1).getId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].firstName").value(activeStudents.get(1).getFirstName()));
 
         verify(studentService).getAllStudents(true);
     }
     @Test
-    void givenStudentObject_whenCreateStudent_thenReturnSavedStudent() throws Exception{
-        Student newStudent = new Student(3L, "Raj", "k", "raj@123.com", "AB+", "Amit", "Sakshi", 11, "Female", "Karnataka", 7, "painting", "dust", "bus", true);
+    void givenStudentRequest_whenAddStudent_thenReturnSavedStudent() throws Exception{
         StudentRequest studentRequest = new StudentRequest();
-
-        when(studentService.addStudent(any(Student.class))).thenReturn(newStudent);
+        when(studentService.addStudent(any(Student.class))).thenReturn(student1);
         ObjectMapper objectMapper=new ObjectMapper();
         mockMvc.perform(MockMvcRequestBuilders.post("/students")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(studentRequest)))
                 .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(3))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("Raj"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(student1.getId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value(student1.getFirstName()));
 
         verify(studentService).addStudent(any(Student.class));
     }
     @Test
-    void givenStudentObjectWithNullValues_whenAddStudent_thenThrowException() throws Exception{
+    void givenStudentRequestWithNullValues_whenAddStudent_thenThrowException() throws Exception{
         when(studentService.addStudent(any(Student.class)))
-                .thenThrow(new BadRequestException(ErrorCode.INVALID_FIRST_NAME, "first name cannot be null"));
+                .thenThrow(new BadRequestException(ErrorCode.INVALID_FIRST_NAME, ErrorMessage.INVALID_FIRST_NAME));
         mockMvc.perform(MockMvcRequestBuilders.post("/students")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"firstName\": null,\"lastName\": \"Doe\"}"))
                 .andExpect(status().isBadRequest())
-                .andDo(print())
-                .andExpect(MockMvcResultMatchers.content().string(containsString("first name cannot be null")));
+                .andExpect(MockMvcResultMatchers.content().string(containsString(ErrorMessage.INVALID_FIRST_NAME)));
 
     }
     @Test
-    public void givenEmployeeId_whenDeleteEmployee_thenReturn200() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/students/1"))
+    public void givenStudentId_whenDeleteStudent_thenReturn200() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete("/students/{id}",student1.getId()))
                 .andExpect(status().isOk());
 
-        verify(studentService).deleteStudent(1L);
+        verify(studentService).deleteStudent(student1.getId());
     }
 }
