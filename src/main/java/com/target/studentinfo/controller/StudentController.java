@@ -18,15 +18,21 @@ public class StudentController {
         this.studentMapper = studentMapper;
     }
 
+    @GetMapping("/students/all")
+    public List<StudentResponse> getAllStudents(){
+        List<Student> allStudents = studentService.getAllStudents();
+        return studentMapper.toStudentResponseList(allStudents);
+    }
+
     @GetMapping("/students")
-    public List<StudentResponse> getAllStudentInfo(@RequestParam(defaultValue="true") Boolean isActive){
-        List<Student> students = studentService.getAllStudents(isActive);
+    public List<StudentResponse> getStudents(@RequestParam(defaultValue="true") Boolean isActive, @RequestParam List<Integer> standardList){
+        List<Student> students = studentService.getStudents(isActive, standardList);
         return studentMapper.toStudentResponseList(students);
     }
 
     @GetMapping("/students/{id}")
-    public StudentResponse getStudentById(@PathVariable("id") long id , @RequestParam(defaultValue="true") Boolean isActive){
-        Optional<Student> student = studentService.getStudent(id, isActive);
+    public StudentResponse getStudent(@RequestParam(defaultValue="true") Boolean isActive, @PathVariable("id") long id){
+        Optional<Student> student = studentService.getStudent(isActive, id);
         return studentMapper.toStudentResponse(student);
     }
 

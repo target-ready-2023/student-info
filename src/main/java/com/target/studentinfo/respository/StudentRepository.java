@@ -11,22 +11,25 @@ import java.util.List;
 import java.util.Optional;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long>{
-    String getActiveStudentsQuery = "SELECT s FROM Student s where s.isActive=true";
-    String softDeleteStudentQuery = "UPDATE Student s SET s.isActive=false where id=?1";
+    String getStudentsQuery = "SELECT s FROM Student s where s.isActive=?1 and s.standard in ?2";
+    String deleteStudentQuery = "UPDATE Student s SET s.isActive=false where id=?1";
 
-    String getActiveStudentQuery = "SELECT s FROM Student s where s.isActive=true and id=?1";
+    String getStudentQuery = "SELECT s FROM Student s where s.isActive=?1 and id=?2";
 
 
-    @Query(getActiveStudentsQuery)
-    public List<Student> findAllActive();
 
-    @Query(softDeleteStudentQuery)
+
+    @Query(getStudentsQuery)
+    public List<Student> getStudents(Boolean isActive, List<Integer> standardList);
+
+
+    @Query(deleteStudentQuery)
     @Modifying
     @Transactional
-    public void softDeleteStudent(long id);
+    public void deleteStudent(long id);
 
-    @Query(getActiveStudentQuery)
-    public Optional<Student> findByIdActive(long id);
+    @Query(getStudentQuery)
+    public Optional<Student> getStudent(Boolean isActive, long id);
 
 }
 

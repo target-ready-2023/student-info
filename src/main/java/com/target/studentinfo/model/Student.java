@@ -3,6 +3,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.antlr.v4.runtime.misc.NotNull;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Data
@@ -36,7 +38,7 @@ public class Student {
     private String gender;
     @Column(name = "address")
     private String address;
-    @Column(name = "class")
+    @Column(name = "standard")
     private int standard;
     @Column(name = "extracurricular")
     private String extraCurricular;
